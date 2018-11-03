@@ -68,7 +68,9 @@ namespace WindowsFormsAppExample
 
         private void BtnFilter_Click(object sender, EventArgs e)
         {
+            BtnFilter.Enabled = false;
             GridLoad(!string.IsNullOrEmpty(TxtFilter.Text) ? TxtFilter.Text : null);
+            BtnFilter.Enabled = true;
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
