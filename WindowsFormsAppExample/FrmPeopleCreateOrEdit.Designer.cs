@@ -42,7 +42,9 @@
             this.BtnExit = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.BtnSave = new System.Windows.Forms.Button();
+            this.ErrorProviderCollection = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProviderCollection)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -64,7 +66,7 @@
             // ChkActive
             // 
             this.ChkActive.AutoSize = true;
-            this.ChkActive.Location = new System.Drawing.Point(226, 84);
+            this.ChkActive.Location = new System.Drawing.Point(251, 83);
             this.ChkActive.Name = "ChkActive";
             this.ChkActive.Size = new System.Drawing.Size(15, 14);
             this.ChkActive.TabIndex = 17;
@@ -72,11 +74,12 @@
             // 
             // TxtSalary
             // 
-            this.TxtSalary.Location = new System.Drawing.Point(115, 83);
+            this.TxtSalary.Location = new System.Drawing.Point(130, 83);
             this.TxtSalary.Name = "TxtSalary";
             this.TxtSalary.Size = new System.Drawing.Size(100, 20);
             this.TxtSalary.TabIndex = 16;
             this.TxtSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.TxtSalary.Validating += new System.ComponentModel.CancelEventHandler(this.TxtSalary_Validating);
             // 
             // TxtBirthday
             // 
@@ -86,18 +89,20 @@
             this.TxtBirthday.Size = new System.Drawing.Size(100, 20);
             this.TxtBirthday.TabIndex = 15;
             this.TxtBirthday.ValidatingType = typeof(System.DateTime);
+            this.TxtBirthday.Validating += new System.ComponentModel.CancelEventHandler(this.TxtBirthday_Validating);
             // 
             // TxtName
             // 
             this.TxtName.Location = new System.Drawing.Point(7, 33);
             this.TxtName.Name = "TxtName";
-            this.TxtName.Size = new System.Drawing.Size(434, 20);
+            this.TxtName.Size = new System.Drawing.Size(418, 20);
             this.TxtName.TabIndex = 14;
+            this.TxtName.Validating += new System.ComponentModel.CancelEventHandler(this.TxtName_Validating);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(112, 67);
+            this.label4.Location = new System.Drawing.Point(127, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 13;
@@ -106,7 +111,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(223, 67);
+            this.label3.Location = new System.Drawing.Point(248, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 12;
@@ -132,6 +137,8 @@
             // 
             // BtnExit
             // 
+            this.BtnExit.CausesValidation = false;
+            this.BtnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnExit.ImageKey = "if_Close_Switch_Off_Power_Switcher_Button_1654359.png";
             this.BtnExit.ImageList = this.imageList1;
@@ -168,15 +175,21 @@
             this.BtnSave.UseVisualStyleBackColor = true;
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
+            // ErrorProviderCollection
+            // 
+            this.ErrorProviderCollection.ContainerControl = this;
+            // 
             // FrmPeopleCreateOrEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BtnExit;
             this.ClientSize = new System.Drawing.Size(471, 196);
             this.Controls.Add(this.BtnExit);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmPeopleCreateOrEdit";
@@ -185,6 +198,7 @@
             this.Load += new System.EventHandler(this.FrmPeopleCreateOrEdit_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorProviderCollection)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,5 +217,6 @@
         private System.Windows.Forms.Button BtnExit;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ErrorProvider ErrorProviderCollection;
     }
 }

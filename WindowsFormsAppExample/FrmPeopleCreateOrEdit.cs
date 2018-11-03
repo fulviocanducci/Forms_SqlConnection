@@ -30,30 +30,37 @@ namespace WindowsFormsAppExample
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            People people = new People();            
-            people.Name = TxtName.Text;            
-            people.Created = DateTime.Now;
-            if (DateTime.TryParse(TxtBirthday.Text, out var dateBirthday))
+            if (Validate())
             {
-                people.DateBirthday = dateBirthday;
+                People people = new People();
+                people.Name = TxtName.Text;
+                people.Created = DateTime.Now;
+                if (DateTime.TryParse(TxtBirthday.Text, out var dateBirthday))
+                {
+                    people.DateBirthday = dateBirthday;
+                }
+                people.Active = ChkActive.Checked;
+                people.Salary = 0m;
+                if (decimal.TryParse(TxtSalary.Text, out var salary))
+                {
+                    people.Salary = salary;
+                }
+                if (Operation == Operation.Edit)
+                {
+                    people.Id = Id;
+                    DalPeople.Edit(people);
+                }
+                else if (Operation == Operation.Insert)
+                {
+                    DalPeople.Insert(people);
+                }
+
+                Close();
             }
-            people.Active = ChkActive.Checked;
-            people.Salary = 0m;
-            if (decimal.TryParse(TxtSalary.Text, out var salary))
+            else
             {
-                people.Salary = salary;
+                MessageBox.Show("Dados inválidos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            if (Operation == Operation.Edit)
-            {
-                people.Id = Id;
-                DalPeople.Edit(people);
-            }
-            else if (Operation == Operation.Insert)
-            {
-                DalPeople.Insert(people);
-            }
-            
-            Close();
         }
 
         private void FrmPeopleCreateOrEdit_Load(object sender, EventArgs e)
@@ -71,5 +78,43 @@ namespace WindowsFormsAppExample
             }
         }
 
+        private void TxtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (TxtName.Text.Trim().Length == 0)
+            {
+                e.Cancel = true;
+                ErrorProviderCollection.SetError(TxtName, "Digite o nome");
+            }
+            else
+            {
+                ErrorProviderCollection.SetError(TxtName, "");
+            }
+        }
+
+        private void TxtBirthday_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!DateTime.TryParse(TxtBirthday.Text, out _))
+            {
+                e.Cancel = true;
+                ErrorProviderCollection.SetError(TxtBirthday, "Digite o aniversário");
+            }
+            else
+            {
+                ErrorProviderCollection.SetError(TxtBirthday, "");
+            }
+        }
+
+        private void TxtSalary_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!decimal.TryParse(TxtSalary.Text, out _))
+            {
+                e.Cancel = true;
+                ErrorProviderCollection.SetError(TxtSalary, "Valor salarial errado");
+            }
+            else
+            {
+                ErrorProviderCollection.SetError(TxtSalary, "");
+            }
+        }
     }
 }
